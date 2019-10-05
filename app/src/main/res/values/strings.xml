@@ -2,4 +2,6 @@
     <string name="app_name">RxJava Cached Retrofit</string>
     <string name="title_junior">Junior</string>
     <string name="title_senior">Senior</string>
+    <string name="delete">Delete</string>
+    <string name="title_activity_devotionals">DevotionalsActivity</string>
 </resources>

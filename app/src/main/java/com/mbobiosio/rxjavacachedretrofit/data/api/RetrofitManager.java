@@ -20,6 +20,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Created by Mbuodile Obiosio on Aug 11,2019
@@ -79,6 +80,48 @@ public class RetrofitManager {
             mCachedRetrofit = new Retrofit.Builder()
                     .baseUrl(Constants.WEEK_LESSON_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(mCachedOkHttpClient)
+                    .build();
+        }
+
+        return mCachedRetrofit;
+    }
+
+    public Retrofit getDevRetrofit() {
+        if (mRetrofit == null) {
+            // Add all interceptors you want (headers, URL, logging)
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                    .addInterceptor(provideOfflineCacheInterceptor())
+                    .addNetworkInterceptor(provideCacheInterceptor())
+                    .cache(provideCache());
+
+            mOkHttpClient = httpClient.build();
+
+            mRetrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.DEVOTIONAL_BASE_URL)
+                    .addConverterFactory(SimpleXmlConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    // Add your adapter factory to handler Errors
+                    .client(mOkHttpClient)
+                    .build();
+        }
+
+        return mRetrofit;
+    }
+
+    public Retrofit getCachedDevRetrofit() {
+        if (mCachedRetrofit == null) {
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                    // Add all interceptors you want (headers, URL, logging)
+                    .addInterceptor(provideForcedOfflineCacheInterceptor())
+                    .cache(provideCache());
+
+            mCachedOkHttpClient = httpClient.build();
+
+            mCachedRetrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.DEVOTIONAL_BASE_URL)
+                    .addConverterFactory(SimpleXmlConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(mCachedOkHttpClient)
                     .build();

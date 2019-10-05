@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.signature.ObjectKey;
 import com.mbobiosio.rxjavacachedretrofit.data.api.ApiService;
 import com.mbobiosio.rxjavacachedretrofit.data.api.RetrofitManager;
+import com.mbobiosio.rxjavacachedretrofit.model.DailyModel;
 import com.mbobiosio.rxjavacachedretrofit.model.WeekResponse;
 
 import io.reactivex.Single;
@@ -18,6 +19,7 @@ import io.reactivex.Single;
 public class Utils {
 
     private ApiService mRetrofitManager, mRetrofitManagerCached;
+
 
     public Utils(RetrofitManager retrofitManager) {
         mRetrofitManager = retrofitManager.getRetrofit().create(ApiService.class);
