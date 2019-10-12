@@ -148,6 +148,11 @@ public class DevotionalsActivity extends AppCompatActivity {
                                     mDevotionalAdapter.setData(mDevotionals);
                                 }
 
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    throwable.printStackTrace();
+                                }
                             });
                 })
                 .subscribeOn(Schedulers.io())
@@ -171,6 +176,11 @@ public class DevotionalsActivity extends AppCompatActivity {
                         mDevotionalAdapter.setData(mDevotionals);
                     }
 
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
                 });
 
     }
