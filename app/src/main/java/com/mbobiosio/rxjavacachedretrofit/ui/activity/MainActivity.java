@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void runCache() {
         mUtils.getCachedLessons() //From cache
-
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<WeekResponse, List<WeekModel>>() {
@@ -96,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
                         mWeekAdapter.set(mDataList);
                     }
 
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
                 });
     }
 
@@ -125,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
                         mWeekAdapter.set(mDataList);
                     }
 
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
                 });
     }
 
